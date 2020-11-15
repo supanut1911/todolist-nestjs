@@ -4,11 +4,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {typeOrmConfig} from '../config/typeorm.config'
 import { TodosModule } from './todos/todos.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     TodosModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

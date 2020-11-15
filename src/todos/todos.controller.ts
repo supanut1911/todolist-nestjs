@@ -8,14 +8,14 @@ import { TodosService } from './todos.service';
 export class TodosController {
     constructor(private todoService: TodosService) {}
 
-    @Get()
-    getTodos(@Query() filerDto: GetTaskFilterDto): Promise<Todo[]> {
-        return this.todoService.getTodos(filerDto)
-    }
-
     @Get('/:id')
     getTodoById(@Param('id', ParseIntPipe) id: number): Promise<Todo> {
         return this.todoService.getTodoById(id)
+    }
+
+    @Get()
+    getTodos(@Query() filerDto: GetTaskFilterDto): Promise<Todo[]> {
+        return this.todoService.getTodos(filerDto)
     }
 
     @Post()

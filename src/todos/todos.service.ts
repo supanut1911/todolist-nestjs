@@ -13,10 +13,6 @@ export class TodosService {
         private todoRepository: TodoRepository
     ) {}
     
-    async getTodos(filterDto: GetTaskFilterDto): Promise<Todo[]> {
-        return this.todoRepository.getTodos(filterDto)
-    }
-
     async getTodoById(id: number): Promise<Todo> {
         const found = await this.todoRepository.findOne(id)        
         if(!found) {
@@ -24,6 +20,10 @@ export class TodosService {
         }
 
         return found
+    }
+
+    async getTodos(filterDto: GetTaskFilterDto): Promise<Todo[]> {
+        return this.todoRepository.getTodos(filterDto)
     }
 
     async createTodo(createtodoDto: CreateTodoDto): Promise<Todo> {
@@ -42,7 +42,6 @@ export class TodosService {
         
         foundtodo.todo = todo
         foundtodo.completed = completed
-        console.log('ya', foundtodo);
         
         await foundtodo.save()
         return foundtodo
