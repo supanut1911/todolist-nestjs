@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/auth/user.entity';
 import { CreateTodoDto } from 'src/dto/create-todo.dto';
 import { GetTaskFilterDto } from 'src/dto/getTodofilter.dto';
 import { Todo } from './todo.entity';
@@ -13,8 +14,8 @@ export class TodosService {
         private todoRepository: TodoRepository
     ) {}
     
-    async getTodoById(id: number): Promise<Todo> {
-        const found = await this.todoRepository.findOne(id)        
+    async getTodoById(id: number, user: User): Promise<Todo> {
+        const found = await this.todoRepository.findOne({ where: { id, userId: user.id}})        
         if(!found) {
             throw new NotFoundException()
         }
@@ -22,12 +23,18 @@ export class TodosService {
         return found
     }
 
-    async getTodos(filterDto: GetTaskFilterDto): Promise<Todo[]> {
-        return this.todoRepository.getTodos(filterDto)
+    async getTodos(
+        filterDto: GetTaskFilterDto,
+         user: User
+    ): Promise<Todo[]> {        
+        return this.todoRepository.getTodos(filterDto, user)
     }
 
-    async createTodo(createtodoDto: CreateTodoDto): Promise<Todo> {
-        return this.todoRepository.createTodo(createtodoDto)
+    async createTodo(
+        createtodoDto: CreateTodoDto,
+         user: User
+    ): Promise<Todo> {
+        return this.todoRepository.createTodo(createtodoDto, user)
     }
 
     async deleteTodo(id: number): Promise<void> {
@@ -37,13 +44,13 @@ export class TodosService {
         }
     }
 
-    async updateTodo(id:number, todo: string, completed: boolean): Promise<Todo> {
-        let foundtodo = await this.getTodoById(id)
+    // async updateTodo(id:number, todo: string, completed: boolean): Promise<Todo> {
+    //     let foundtodo = await this.getTodoById(id)
         
-        foundtodo.todo = todo
-        foundtodo.completed = completed
+    //     foundtodo.todo = todo
+    //     foundtodo.completed = completed
         
-        await foundtodo.save()
-        return foundtodo
-    }
+    //     await foundtodo.save()
+    //     return foundtodo
+    // }
 }
