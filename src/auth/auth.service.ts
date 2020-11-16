@@ -10,17 +10,15 @@ export class AuthService {
         private userRepository: UserRepository
     ) {}
 
-    signUp(authCredentialDto: AuthCredentialDto) {
+    async signUp(authCredentialDto: AuthCredentialDto) {
         return this.userRepository.signUp(authCredentialDto)
     }
 
-    signIn(authCredentialDto: AuthCredentialDto) {
-        let username =  this.userRepository.validateUserPassword(authCredentialDto)
+    async signIn(authCredentialDto: AuthCredentialDto) {
+        let username =  await this.userRepository.validateUserPassword(authCredentialDto)
+        
         if (!username) {
             throw new UnauthorizedException('invalid credential')
         } 
-
-        
-        
     }
 }

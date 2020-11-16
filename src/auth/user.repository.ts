@@ -30,8 +30,7 @@ export class UserRepository extends Repository<User> {
     async validateUserPassword(authCredentialDto: AuthCredentialDto): Promise<string> {
         let { username, password } = authCredentialDto 
         let user = await this.findOne({username})
-
-        if ((user) && (this.validatePassword(password, (await user).password))){
+        if ((user) && (await this.validatePassword(password, user.password))){
             return user.username
         } else {
             return null
