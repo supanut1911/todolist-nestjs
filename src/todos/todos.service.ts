@@ -57,7 +57,6 @@ export class TodosService {
         user: User
     ): Promise<Todo> {
         let foundtodo = await this.getTodoById(id, user)
-        console.log('ya', foundtodo);
         
         foundtodo.todo = todo
         foundtodo.completed = completed
