@@ -40,8 +40,11 @@ export class TodosService {
         return this.todoRepository.createTodo(createtodoDto, user)
     }
 
-    async deleteTodo(id: number): Promise<void> {
-        const result = await this.todoRepository.delete(id)
+    async deleteTodo(
+        id: number,
+        user: User
+    ): Promise<void> {
+        const result = await this.todoRepository.delete({id, userId: user.id })
         if (result.affected === 0) {
             throw new NotFoundException(`not found id ${id}`)
         }
