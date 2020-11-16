@@ -41,12 +41,13 @@ export class TodosController {
         return this.todoService.deleteTodo(id)
     }
 
-    // @Patch('/:id')
-    // updateTodo(
-    //     @Param('id', ParseIntPipe) id: number,
-    //     @Body('todo') todo: string,
-    //     @Body('completed', ParseBoolPipe) completed: boolean
-    // ): Promise<Todo> {
-    //     return this.todoService.updateTodo(id, todo, completed)
-    // }
+    @Patch('/:id')
+    updateTodo(
+        @Param('id', ParseIntPipe) id: number,
+        @Body('todo') todo: string,
+        @Body('completed', ParseBoolPipe) completed: boolean,
+        @GetUser() user: User
+    ): Promise<Todo> {
+        return this.todoService.updateTodo(id, todo, completed, user)
+    }
 }

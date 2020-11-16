@@ -14,7 +14,10 @@ export class TodosService {
         private todoRepository: TodoRepository
     ) {}
     
-    async getTodoById(id: number, user: User): Promise<Todo> {
+    async getTodoById(
+        id: number,
+        user: User
+    ): Promise<Todo> {
         const found = await this.todoRepository.findOne({ where: { id, userId: user.id}})        
         if(!found) {
             throw new NotFoundException()
@@ -25,14 +28,14 @@ export class TodosService {
 
     async getTodos(
         filterDto: GetTaskFilterDto,
-         user: User
+        user: User
     ): Promise<Todo[]> {        
         return this.todoRepository.getTodos(filterDto, user)
     }
 
     async createTodo(
         createtodoDto: CreateTodoDto,
-         user: User
+        user: User
     ): Promise<Todo> {
         return this.todoRepository.createTodo(createtodoDto, user)
     }
@@ -44,13 +47,19 @@ export class TodosService {
         }
     }
 
-    // async updateTodo(id:number, todo: string, completed: boolean): Promise<Todo> {
-    //     let foundtodo = await this.getTodoById(id)
+    async updateTodo(
+        id:number,
+        todo: string,
+        completed: boolean,
+        user: User
+    ): Promise<Todo> {
+        let foundtodo = await this.getTodoById(id, user)
+        console.log('ya', foundtodo);
         
-    //     foundtodo.todo = todo
-    //     foundtodo.completed = completed
+        foundtodo.todo = todo
+        foundtodo.completed = completed
         
-    //     await foundtodo.save()
-    //     return foundtodo
-    // }
+        await foundtodo.save()
+        return foundtodo
+    }
 }
