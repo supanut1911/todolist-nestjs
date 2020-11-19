@@ -9,7 +9,7 @@ export class TodoRepository extends Repository<Todo> {
     async getTodos(filterDto: GetTaskFilterDto, user: User): Promise<Todo[]> {
         const {id, completed} = filterDto
         const query = this.createQueryBuilder('todo')
-        query.where('todo.userId = :userId', {userId: user.id});
+        query.where('todo.createBy = :createBy', {createBy: user.id});
 
         if(id) {
             query.andWhere('todo.id = :id', { id: id })

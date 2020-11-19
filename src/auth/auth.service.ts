@@ -28,6 +28,5 @@ export class AuthService {
         let accessToken = await this.jwtService.sign(payload)
         
         return { accessToken }
-
     }
 }
