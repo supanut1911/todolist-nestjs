@@ -41,7 +41,7 @@ export class TodosController {
     deleteTodo(
         @Param('id', ParseIntPipe) id: number,
         @GetUser() user: User
-    ): Promise<void> {
+    ): Promise<Object> {
         return this.todoService.deleteTodo(id, user)
     }
 
