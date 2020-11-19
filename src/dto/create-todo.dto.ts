@@ -6,7 +6,4 @@ export class CreateTodoDto {
 
     @IsNotEmpty()
     completed: boolean
-
-    @IsNotEmpty()
-    createBy: string
 }

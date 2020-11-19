@@ -1,5 +1,5 @@
 import { User } from "src/auth/user.entity";
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Todo extends BaseEntity {
@@ -12,12 +12,9 @@ export class Todo extends BaseEntity {
     @Column()
     completed: boolean
 
-    // @Column()
-    // createBy: string
-
-    @ManyToOne(type => User, user => user.todos, { eager: false  })
-    user: User 
-
     @Column()
-    userId: number
+    createBy: number
+    @ManyToOne(type => User, user => user.todos, { eager: false  })
+    @JoinColumn({ name: 'createBy'})
+    user: User 
 }

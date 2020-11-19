@@ -44,7 +44,7 @@ export class TodosService {
         id: number,
         user: User
     ): Promise<void> {
-        const result = await this.todoRepository.delete({id, userId: user.id })
+        const result = await this.todoRepository.delete({id, createBy: user.id })
         if (result.affected === 0) {
             throw new NotFoundException(`not found id ${id}`)
         }
