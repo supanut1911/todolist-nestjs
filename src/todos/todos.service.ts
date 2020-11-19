@@ -18,7 +18,7 @@ export class TodosService {
         id: number,
         user: User
     ): Promise<Todo> {
-        const found = await this.todoRepository.findOne({ where: { id, userId: user.id}})        
+        const found = await this.todoRepository.findOne({ where: { id, createBy: user.id}})        
         if(!found) {
             throw new NotFoundException()
         }
